@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumerv2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: consumerv2
+  template:
+    metadata:
+      labels:
+        app: consumerv2
+    spec:
+      containers:
+        - name: consumerv2
+          image: fabricio211/consumer-v2:0.0.2-SNAPSHOT
+          imagePullPolicy: Always
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              memory: 800Mi
+              cpu: "300m"
+            limits:
+              memory: 800Mi
+              cpu: "300m"
+          livenessProbe:
+            httpGet:
+              port: 8282
+              scheme: HTTP
+              path: /actuator/info
+            initialDelaySeconds: 10
+            periodSeconds: 40
+            timeoutSeconds: 2
+            failureThreshold: 30
+            successThreshold: 1
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /actuator/health
+              port: 8282
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+            successThreshold: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: consumerv2
+  labels:
+    app: consumerv2
+    spring-boot: "true"
+spec:
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8282
+      targetPort: 8080
+  selector:
+    app: consumerv2

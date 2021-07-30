@@ -1,17 +1,16 @@
+server:
+  port: 9090
 spring:
   application:
-    name: consumer-v2
+    name: producer
   kafka:
-    client-id: consumerv1
     bootstrap-servers:
-      - localhost:9092
+      - kafka:9092
   cloud:
     stream:
+      source: person
       bindings:
-        person-in-0:
+        person-out-0:
           destination: person
           contentType: application/json
           group: '${spring.application.name}'
-server:
-  port: 8181
-

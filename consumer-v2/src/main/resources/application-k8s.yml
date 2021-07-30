@@ -1,10 +1,10 @@
 spring:
   application:
-    name: consumer-v2
+    name: consumer-v1
   kafka:
     client-id: consumerv1
     bootstrap-servers:
-      - localhost:9092
+      - kafka:9092
   cloud:
     stream:
       bindings:
@@ -12,6 +12,8 @@ spring:
           destination: person
           contentType: application/json
           group: '${spring.application.name}'
+
+
 server:
-  port: 8181
+  port: 8282
 
