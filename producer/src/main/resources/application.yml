@@ -1,0 +1,13 @@
+server:
+  port: 9090
+spring:
+  application:
+    name: producer
+  cloud:
+    stream:
+      source: person
+      bindings:
+        person-out-0:
+          destination: person
+          contentType: application/json
+          group: '${spring.application.name}'
