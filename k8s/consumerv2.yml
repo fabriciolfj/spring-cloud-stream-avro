@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: consumerv2
-          image: fabricio211/consumer-v2:0.0.2-SNAPSHOT
+          image: fabricio211/consumer-v2:0.0.3-SNAPSHOT
           imagePullPolicy: Always
           env:
             - name: SPRING_PROFILES_ACTIVE

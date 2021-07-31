@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: producer
-          image: fabricio211/producer:0.0.1-SNAPSHOT
+          image: fabricio211/producer:0.0.5-SNAPSHOT
           imagePullPolicy: Always
           env:
             - name: SPRING_PROFILES_ACTIVE

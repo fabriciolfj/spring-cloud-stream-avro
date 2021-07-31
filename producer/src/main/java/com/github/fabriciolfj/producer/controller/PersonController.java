@@ -1,9 +1,12 @@
 package com.github.fabriciolfj.producer.controller;
 
-import com.github.fabriciolfj.producer.model.Person;
+import com.github.fabriciolfj.producer.model.PersonDTO;
+import com.github.fabriciolfj.producer.schema.PersonAvro;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -17,8 +20,11 @@ public class PersonController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void send(@RequestBody final Person person) {
-        person.setCode(UUID.randomUUID().toString());
-        streamBridge.send("person-out-0", person);
+    public void send(@RequestBody final PersonDTO personDTO) {
+        PersonAvro avro = new PersonAvro();
+        avro.setCode(UUID.randomUUID().toString());
+        avro.setNome(personDTO.getName());
+
+        streamBridge.send("person-out-0", avro);
     }
 }

@@ -1,0 +1,14 @@
+{
+  "type":"record",
+  "name":"PersonAvro",
+  "namespace":"com.github.fabriciolfj.producer.schema",
+  "fields": [
+    {
+      "name":"nome",
+      "type":"string"
+    },{
+      "name":"code",
+      "type": "string"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: producer
+  cloud:
+    stream:
+      bindings:
+        person-out-0:
+          contentType: application/*+avro
+          destination: person-topic
+    schema:
+      avro:
+        dynamic-schema-generation-enabled: true
+    schema-registry-client:
+      endpoint: http://localhost:8081/
+  kafka:
+    bootstrap-servers:
+      - localhost:9092
+  main:
+    allow-bean-definition-overriding: true

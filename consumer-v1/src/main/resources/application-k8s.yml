@@ -2,16 +2,25 @@ spring:
   application:
     name: consumer-v2
   kafka:
-    client-id: consumerv1
+    client-id: consumerv2
     bootstrap-servers:
       - kafka:9092
   cloud:
+    schema:
+      avro:
+        dynamicSchemaGenerationEnabled: true #Then, we just need to enable dynamic Avro schema generation. Once you do it, Spring Cloud Stream automatically generates and sends schema to the schema registry before sending a message to a Kafka topic.
+    schemaRegistryClient:
+      endpoint: http://kafka-confluent-cp-schema-registry:8081/
     stream:
+      default:
+        content-type: application/*+avro
       bindings:
         person-in-0:
           destination: person
-          contentType: application/json
+          contentType: application/*+avro
           group: '${spring.application.name}'
+
+
 server:
-  port: 8181
+  port: 8282
 
