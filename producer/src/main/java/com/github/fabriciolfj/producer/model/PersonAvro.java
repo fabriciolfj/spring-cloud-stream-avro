@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PersonDTO {
+public class PersonAvro {
 
     private String name;
+    private String code;
 }
